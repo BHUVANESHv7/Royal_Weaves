@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="container hero-content">
+        <h1>Experience Royalty in Every Weave</h1>
+        <p>Discover the finest collection of luxury ethnic wear for any occasion.</p>
+        <a href="#products" class="btn btn-primary">Shop Now</a>
+    </div>
+</section>
+
+<section class="container" id="products">
+    <h2 class="section-title">Featured Collections</h2>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <div class="product-image">
+                <a href="/product/{{ product.id }}">
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                </a>
+                {% if product.isNew %}
+                <span class="badge">New</span>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <h3><a href="/product/{{ product.id }}">{{ product.name }}</a></h3>
+                <p class="category">{{ product.category }}</p>
+                <div class="price-row">
+                    <span class="price">₹{{ product.price }}</span>
+                    <span class="original-price">₹{{ product.originalPrice }}</span>
+                    <span class="discount">{{ product.discount }}% OFF</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-primary buy-now" data-id="{{ product.id }}" data-name="{{ product.name }}"
+                        data-price="{{ product.price }}" data-image="{{ product.image }}">Buy Now</button>
+                    <button class="btn btn-outline add-to-cart" data-id="{{ product.id }}"
+                        data-name="{{ product.name }}" data-price="{{ product.price }}"
+                        data-image="{{ product.image }}">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Weaves - Luxury Ethnic Wear</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">Royal Weaves</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/cart" class="cart-link">
+                    Cart <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Royal Weaves. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/cart.js"></script>
+</body>
+</html>

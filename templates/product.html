@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="container" style="padding-top: 50px; min-height: 80vh;">
+    <div class="product-detail-container">
+        <!-- Product Image Gallery -->
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="{{ product.images[0] if product.images else product.image }}" alt="{{ product.name }}"
+                    id="main-img">
+            </div>
+            <!-- Thumbnails -->
+            <div class="thumbnails">
+                {% for img in product.images %}
+                <img src="{{ img }}" class="thumb {{ 'active' if loop.first else '' }}" onclick="changeImage(this)"
+                    alt="{{ product.name }} view {{ loop.index }}">
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info-detail">
+            <p class="brand-name">Royal Weaves Collection</p>
+            <h1>{{ product.name }}</h1>
+
+            <div class="rating-box">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-count">4.2 (128 Ratings)</span>
+            </div>
+
+            <div class="price-box">
+                <span class="current-price">₹{{ product.price }}</span>
+                <span class="original-price">₹{{ product.originalPrice }}</span>
+                <span class="discount-percent">{{ product.discount }}% OFF</span>
+            </div>
+            <p class="tax-note">inclusive of all taxes</p>
+
+            <!-- Size Selector -->
+            <div class="size-selector">
+                <h3>Select Size</h3>
+                <div class="sizes">
+                    <button class="size-btn">S</button>
+                    <button class="size-btn">M</button>
+                    <button class="size-btn active">L</button>
+                    <button class="size-btn">XL</button>
+                    <button class="size-btn">XXL</button>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="action-buttons">
+                <button class="btn btn-primary buy-now-large" onclick="buyNow()">Buy Now</button>
+                <button class="btn btn-outline add-to-bag-large" onclick="addToBag()">Add to Bag</button>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-description">
+                <h3>Product Details</h3>
+                <ul>
+                    <li><strong>Category:</strong> {{ product.category }}</li>
+                    <li><strong>Material:</strong> Premium Quality Fabric</li>
+                    <li><strong>Fit:</strong> Regular Fit</li>
+                    <li><strong>Care:</strong> Machine Wash</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Similar Styles Script -->
+<script>
+    function changeImage(el) {
+        document.getElementById('main-img').src = el.src;
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    // Size selection
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    function addToBag() {
+        const product = {
+            id: "{{ product.id }}",
+            name: "{{ product.name }}",
+            price: "{{ product.price }}",
+            image: "{{ product.image }}"
+        };
+        // Use the global addToCart function from cart.js
+        if (typeof addToCart === 'function') {
+            addToCart(product);
+        } else {
+            console.error("Cart function not found");
+        }
+    }
+
+    function buyNow() {
+        addToBag();
+        window.location.href = '/cart';
+    }
+</script>
+{% endblock %}
